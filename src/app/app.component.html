@@ -13,6 +13,9 @@
 <input type="text" [(ngModel)]="title">
 {{ title }}
 
+<input type="text" [(ngModel)]="power">
+{{ power | exponential }}
+
 
 <div [ngSwitch]="title">
   <p *ngSwitchCase="'nicolas'">este es nicolas</p>
@@ -31,7 +34,11 @@
   </li>
 </ul>
 
-<div *ngFor="let product of products">
-  <app-product (productClicked)="clickProduct($event)" [product]="product"></app-product>
+<div class="product-grid">
+  <app-product 
+    *ngFor="let product of products" 
+    (productClicked)="clickProduct($event)" 
+    [product]="product">
+  </app-product>
 </div>
 

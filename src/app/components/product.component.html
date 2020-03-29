@@ -1,5 +1,7 @@
-<h3>{{ product.title }}</h3>
+<h3 appHighlight>{{ product.title | uppercase }}</h3>
 <img [src]="product.image" alt="">
-<strong>{{ product.price }}</strong>
+<strong>{{ product.price | currency }}</strong>
+<p>{{ product.description | slice:0:20 }} </p>
+<p> {{ today | date:"yyyy/MM/dd" }} </p>
 
 <button (click)="addCart()">Agregar al carrito</button>
