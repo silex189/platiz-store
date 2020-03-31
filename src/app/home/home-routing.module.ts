@@ -5,7 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: '',
+    component: HomeComponent
   }
 ];
 
@@ -17,6 +18,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class HomeRoutingModule {
-
-}
+export class HomeRoutingModule {}
