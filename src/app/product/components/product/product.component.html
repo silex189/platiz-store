@@ -9,10 +9,10 @@
   <mat-card-content>
     <p>{{ product.description | slice:0:10 }}</p>
   </mat-card-content>
-  <mat-card-action>
+  <mat-card-actions>
     <a mat-raised-button [routerLink]="['/products', product.id]">Ver detalle</a>
     <button mat-raised-button color="primary" (click)="addCart()">Agregar al carrito</button>
-  </mat-card-action>
+  </mat-card-actions>
 </mat-card>
 <!-- <h3 appHighlight>{{ product.title | uppercase }}</h3>
 <img [src]="product.image" alt="">
