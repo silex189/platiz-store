@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Product } from './../../models/product.model';
 
+import * as Sentry from '@sentry/browser';
+
 import { environment } from '../../../../environments/environment';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError, retry } from 'rxjs/operators';
 
 interface User {
   email: string;
@@ -39,13 +41,28 @@ export class ProductsService {
   }
 
   deleteProduct(id: string) {
-    return this.http.delete(`${environment.url_api}/products/${id}`);
+    return this.http.delete(`${environment.url_api}/products/${id}`)
+      .pipe(
+        catchError(this.handleErrors)
+      );
   }
 
   getRandomUsers(): Observable<User[]> {
-    return this.http.get('https://randomuser.me/api/?results=2')
+    return this.http.get('https://dsgfdsgfagfgsgasggdafdag.me/api/?results=2')
     .pipe(
+      retry(3),
+      catchError(this.handleErrors),
       map((response: any) => response.results as User[])
     );
+  }
+
+  getFile() {
+    return this.http.get('assets/files/test.txt', {responseType: 'text'});
+  }
+
+  private handleErrors(error: HttpErrorResponse) {
+    console.log(error);
+    Sentry.captureException(error);
+    return throwError('ups, algo salio mal');
   }
 }

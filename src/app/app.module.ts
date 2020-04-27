@@ -1,20 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { AngularFireModule} from '@angular/fire';
-import { AngularFireAuthModule} from '@angular/fire/auth';
-import { AngularFireStorageModule} from '@angular/fire/storage';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import * as Sentry from '@sentry/browser';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LayoutComponent } from './layout/layout.component';
-
-import { SharedModule } from './shared/shared.module';
+import { AuthInterceptor } from './auth.interceptor';
 import { CoreModule } from './core/core.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutComponent } from './layout/layout.component';
+import { SharedModule } from './shared/shared.module';
 
-import { environment } from '../environments/environment';
+
+
+
+
+Sentry.init({
+  dsn: 'https://fe7c2d68ec3f4982a9c7028538c07999@o384395.ingest.sentry.io/5215574'
+});
 
 @NgModule({
   declarations: [
@@ -33,7 +40,13 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule,
     AngularFireStorageModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

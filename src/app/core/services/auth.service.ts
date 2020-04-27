@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { TokenService } from './token.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +10,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class AuthService {
 
   constructor(
-    private af: AngularFireAuth
+    private af: AngularFireAuth,
+    private http: HttpClient,
+    private token: TokenService
   ) { }
 
   createUser(email: string, password: string) {
@@ -24,5 +29,18 @@ export class AuthService {
 
   hasUser() {
     return this.af.authState;
+  }
+
+  loginRestApi(email: string, password: string) {
+    return this.http.post('https://platzi-store.herokuapp.com/auth', {
+      email,
+      password
+    })
+    .pipe(
+      tap((data: {token: string}) => {
+        const token = data.token;
+        this.token.saveToken(token);
+      })
+    );
   }
 }

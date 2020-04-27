@@ -62,7 +62,26 @@ export class ProductDetailComponent implements OnInit {
     this.productsService.deleteProduct('222')
       .subscribe(rta => {
         console.log(rta);
-      })
+      });
+  }
+
+  getRandomusers() {
+    this.productsService.getRandomUsers()
+    .subscribe(
+      user => {
+      console.log(user);
+    },
+    error => {
+      console.error(error);
+    }
+    );
+  }
+
+  getFile() {
+    this.productsService.getFile()
+    .subscribe(content => {
+      console.log(content);
+    })
   }
 
 }
