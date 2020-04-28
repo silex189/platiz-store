@@ -15,10 +15,6 @@ import { CoreModule } from './core/core.module';
 import { LayoutComponent } from './layout/layout.component';
 import { SharedModule } from './shared/shared.module';
 
-
-
-
-
 Sentry.init({
   dsn: 'https://fe7c2d68ec3f4982a9c7028538c07999@o384395.ingest.sentry.io/5215574'
 });
